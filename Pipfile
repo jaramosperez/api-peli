@@ -7,6 +7,17 @@ verify_ssl = true
 
 [packages]
 django = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
+pylint-django = "*"
+django-rest-auth = "*"
+django-allauth = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+dev = "python manage.py runserver 127.0.0.1:8844"
+make = "python manage.py makemigrations"
+migrate = "python manage.py migrate"
