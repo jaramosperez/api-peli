@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\jaram\\.virtualenvs\\backend-easOeuWQ\\Scripts\\python.exe",
+    "python.pythonPath": "/Users/jaramosperez/.local/share/virtualenvs/api-peli-2jcw_Dwb/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }
