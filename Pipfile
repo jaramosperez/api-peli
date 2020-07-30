@@ -14,6 +14,7 @@ django-filter = "*"
 pylint-django = "*"
 django-rest-auth = "*"
 django-allauth = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.8.5"
