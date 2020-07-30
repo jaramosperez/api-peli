@@ -23,41 +23,39 @@
               <a class="button">
                 <strong>Registro</strong>
               </a>
-              <a class="button is-light @click=isLoginActive=true">
-                Acceder
-              </a>
+              <a class="button is-light" @click="isLoginActive=true">Acceder</a>
               <!-- Modal para el login -->
-<b-modal :active.sync="isLoginActive">
-  <form action="">
-    <div class="modal-card" style="width: auto">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Identificación</p>
-      </header>
-      <section class="modal-card-body">
-        <b-field label="Email">
-          <b-input
-            type="email"
-            v-model="loginEmail"
-            placeholder="Tu email"
-            required>
-          </b-input>
-        </b-field>
-        <b-field label="Contraseña">
-          <b-input
-            type="password" 
-            v-model="loginPassword"
-            password-reveal
-            placeholder="Tu contraseña"
-            required>
-          </b-input>
-        </b-field>
-    </section>
-    <footer class="modal-card-foot">
-      <button class="button is-primary">Acceder</button>
-    </footer>
-    </div>
-  </form>
-</b-modal>
+                <b-modal :active.sync="isLoginActive">
+                  <form action="" v-on:submit.prevent="login">
+                    <div class="modal-card" style="width: auto">
+                      <header class="modal-card-head">
+                        <p class="modal-card-title">Identificación</p>
+                      </header>
+                      <section class="modal-card-body">
+                        <b-field label="Email">
+                          <b-input
+                            type="email"
+                            v-model="loginEmail"
+                            placeholder="Tu email"
+                            required>
+                          </b-input>
+                        </b-field>
+                        <b-field label="Contraseña">
+                          <b-input
+                            type="password" 
+                            v-model="loginPassword"
+                            password-reveal
+                            placeholder="Tu contraseña"
+                            required>
+                          </b-input>
+                        </b-field>
+                    </section>
+                    <footer class="modal-card-foot">
+                      <button class="button is-primary">Acceder</button>
+                    </footer>
+                    </div>
+                  </form>
+                </b-modal>
             </div>
           </div>
         </div>
@@ -65,7 +63,7 @@
     </nav>
 
     <section class="main-content columns">
-<aside class="column is-3 section"> <!-- 3 en lugar de 2 y 9 por 10 -->
+<aside class="column is-2 section"> <!-- 3 en lugar de 2 y 9 por 10 -->
   <p class="menu-label is-hidden-touch">General</p>
   <ul class="menu-list">
     <li>
@@ -100,8 +98,24 @@ export default {
       loginEmail: 'test@test.com',
       loginPassword: 'TEST1234A',
     };
+  },
+  methods: {
+  login() {
+    return this.$axios.post('/auth/login/', {
+      email: this.loginEmail,
+      password: this.loginPassword
+    })
+    .then((res) => {
+      if (res.data.key){
+      console.log(res.data.key)
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
-}
+ }
+};
 </script>
 <style>
 .active{
