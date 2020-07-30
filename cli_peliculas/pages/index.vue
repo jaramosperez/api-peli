@@ -67,6 +67,5 @@ clear () {
   this.search()
 }
   }
-
 };
 </script>

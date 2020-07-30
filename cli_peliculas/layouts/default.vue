@@ -20,10 +20,18 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button">
-                <strong>Registro</strong>
-              </a>
-              <a class="button is-light" @click="isLoginActive=true">Acceder</a>
+<a class="button" v-if="!user">
+  <strong>Registro</strong>
+</a>
+<a class="button is-primary" v-else>
+  Bienvenido {{user}} 😄
+</a>
+<a class="button is-light" @click="isLoginActive=true" v-if="!user">
+  Acceder
+</a>
+<a class="button is-light" @click="logout" v-else>
+  Salir
+</a>
               <!-- Modal para el login -->
                 <b-modal :active.sync="isLoginActive">
                   <form action="" v-on:submit.prevent="login">
@@ -99,21 +107,36 @@ export default {
       loginPassword: 'TEST1234A',
     };
   },
-  methods: {
-  login() {
-    return this.$axios.post('/auth/login/', {
-      email: this.loginEmail,
-      password: this.loginPassword
-    })
-    .then((res) => {
-      if (res.data.key){
-      console.log(res.data.key)
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+  computed: {
+  user: function () {
+    return this.$store.state.user;
   }
+},
+  methods: {
+    login() {
+      return this.$axios.post('/auth/login/', {
+        email: this.loginEmail,
+        password: this.loginPassword
+      })
+      .then((res) => {
+        if (res.data.key){
+          this.$store.commit('saveToken', res.data.key)
+          this.$store.commit('saveUser', this.loginEmail.split("@")[0])
+          // Reiniciamos los campos
+          this.loginEmail = ''
+          this.loginPassword = ''
+          // Escondemos la modal
+          this.isLoginActive = false;
+        }
+      })
+      .catch((error) => {
+        alert(Object.values(error.response.data))
+      })
+    },
+    logout() {
+  this.$store.commit('saveToken', null)
+  this.$store.commit('saveUser', null)
+}
  }
 };
 </script>
